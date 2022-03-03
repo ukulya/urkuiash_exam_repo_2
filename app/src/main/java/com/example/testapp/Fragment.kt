@@ -39,8 +39,8 @@ class Fragment : Fragment(R.layout.fragment) {
         )
 
         val recycler = view.findViewById<RecyclerView>(R.id.recycler)
-        //val layoutManager = LinearLayoutManager(requireContext())
-        val layoutManager = GridLayoutManager(requireContext(),5)
+        val layoutManager = LinearLayoutManager(requireContext())
+        //val layoutManager = GridLayoutManager(requireContext(),5)
 
 
         recycler.layoutManager = layoutManager
@@ -59,9 +59,10 @@ class Fragment : Fragment(R.layout.fragment) {
     private fun fetchCharacters(){
         episodesApi.getEpisodes()
             .subscribeOn(Schedulers.io())
+            .map { it }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext{
-                adapter.setData(it)
+                adapter.setData(it.results)
                 swipeContainer.setRefreshing(false)
             }
             .subscribe()

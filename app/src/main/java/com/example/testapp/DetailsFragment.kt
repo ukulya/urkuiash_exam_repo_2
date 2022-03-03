@@ -4,16 +4,10 @@ package com.example.testapp
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -32,17 +26,17 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
         episodesApi.getEpisodeById(id)
             .subscribeOn(Schedulers.io())
-            .map { it.first() }
+            .map { it }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess {
                 view.findViewById<AppCompatTextView>(R.id.id).text = "Character ID - ${it.id}"
                 view.findViewById<AppCompatTextView>(R.id.name).text = "Name - ${it.name}"
                 view.findViewById<AppCompatTextView>(R.id.status).text = "Status - ${it.status}"
                 view.findViewById<AppCompatTextView>(R.id.species).text = "Species - ${it.species}"
-                //view.findViewById<AppCompatTextView>(R.id.type).text = "Type - ${it.type}"
+                view.findViewById<AppCompatTextView>(R.id.type).text = "Type - ${it.type}"
                 view.findViewById<AppCompatTextView>(R.id.gender).text = "Gender - ${it.gender}"
-                view.findViewById<AppCompatTextView>(R.id.origin).text = "Origin - ${it.origin.toString()}"
-                view.findViewById<AppCompatTextView>(R.id.location).text = "Location - ${it.location.toString()}"
+                view.findViewById<AppCompatTextView>(R.id.origin).text = "Origin - ${it.origin?.name}"
+                view.findViewById<AppCompatTextView>(R.id.location).text = "Location - ${it.location?.name}"
 
                 val img = view.findViewById<AppCompatImageView>(R.id.image)
                 Glide.with(view.context)

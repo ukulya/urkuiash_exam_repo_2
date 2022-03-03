@@ -2,14 +2,7 @@ package com.example.testapp
 
 import java.util.*
 data class Characters(
-    val info: Info?,
-    val results: Item?,
-)
-data class Info(
-    val count: Long?,
-    val pages: Long?,
-    val next: String?,
-    val prev: String?
+    val results: List<Item>
 )
 
 data class Item(
@@ -17,11 +10,19 @@ data class Item(
     val name: String?,
     val status: String?,
     val species: String?,
-    //val type: String?,
+    val type: String?,
     val gender: String?,
-    val origin: List<String>?,
-    val location: List<String>?,
+    val origin: Origin?,
+    val location: Location?,
     val image: String?,
     val url: String?,
-    val created: Date?,
+    val created: String?,
+)
+data class Origin(
+    val name: String?,
+    val url: String?,
+)
+data class Location(
+    val name: String?,
+    val url: String?,
 )

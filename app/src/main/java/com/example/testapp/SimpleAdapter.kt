@@ -12,9 +12,9 @@ import com.bumptech.glide.Glide
 class SimpleAdapter(
     private val click: (pos: Long?) -> Unit
 ) : RecyclerView.Adapter<SimpleAdapter.ViewHolder>() {
-    private var list = listOf<Characters>()
+    private var list = listOf<Item>()
 
-    fun setData(list: List<Characters>) {
+    fun setData(list: List<Item>) {
         this.list = list
         notifyDataSetChanged()
         Log.e( "tag","setdata render")
@@ -40,18 +40,18 @@ class SimpleAdapter(
         private val click: (pos: Long?) -> Unit
     ) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: Characters) { // viewbinding
+        fun bind(item: Item) { // viewbinding
             val txt = itemView.findViewById<AppCompatTextView>(R.id.item_text)
-            txt.text = item.results?.name ?: ""
-//            itemView.findViewById<AppCompatTextView>(R.id.status).text = item.status
-//            itemView.findViewById<AppCompatTextView>(R.id.species).text = item.species
-//            itemView.findViewById<AppCompatTextView>(R.id.location).text = item.location.toString()
-//            val img = itemView.findViewById<AppCompatImageView>(R.id.image)
-//            Glide.with(itemView.context)
-//                .load(item.image)
-//                .into(img)
+            txt.text = item.name
+            itemView.findViewById<AppCompatTextView>(R.id.status).text = item.status
+            itemView.findViewById<AppCompatTextView>(R.id.species).text = item.species
+            itemView.findViewById<AppCompatTextView>(R.id.location).text = item.location?.name ?: ""
+            val img = itemView.findViewById<AppCompatImageView>(R.id.image)
+            Glide.with(itemView.context)
+                .load(item.image)
+                .into(img)
             itemView.setOnClickListener {
-                click.invoke(item.results?.id)
+                click.invoke(item.id)
 
             }
         }
